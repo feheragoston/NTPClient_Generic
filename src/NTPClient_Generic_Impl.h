@@ -100,7 +100,9 @@ bool NTPClient::forceUpdate()
 
   // flush any existing packets
   while (this->_udp->parsePacket() != 0)
+  {
     this->_udp->flush();
+  }
 
   this->sendNTPPacket();
 
@@ -135,6 +137,12 @@ bool NTPClient::update()
     if (!this->_udpSetup) 
     {
       this->begin();
+    }
+
+    // flush any existing packets
+    while (this->_udp->parsePacket() != 0)
+    {
+      this->_udp->flush();
     }
 
     this->sendNTPPacket();
